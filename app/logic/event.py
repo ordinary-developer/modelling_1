@@ -12,5 +12,5 @@ class Event(metaclass=ABCMeta):
     time = property(get_time, set_time, None, None)
 
     @abstractmethod
-    def handle_self(self, model):
+    def handle_self(self, Model):
         pass

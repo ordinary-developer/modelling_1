@@ -50,19 +50,3 @@ class TestDevice(unittest.TestCase):
         device.add_request(Request(1, 20))
         #[ASSERT] 
         self.assertFalse(device.is_empty_request_queue())
-
-    def test_create_waiting_time_array(self):
-        self.assertIsNotNone(self.device.waiting_time_array)
-
-    def test_add_waiting_time_for_element(self):
-        #[ARRANGE]
-        device = Device(self.first_value, self.second_value)
-        device.add_request(Request(1, 20))
-        #[ACT]
-        index = 3
-        time = 5.5
-        device.add_waiting_time(index, time)
-        #[ASSERT]
-        self.assertAlmostEqual(time, device.waiting_time_array[index])
-
-    

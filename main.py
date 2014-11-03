@@ -1,4 +1,6 @@
 from app.logic.model import Model
 
 if __name__ == '__main__':
-    Model.initialize(23)    
+    Model.initialize(8*60*60)
+    Model.start()
+

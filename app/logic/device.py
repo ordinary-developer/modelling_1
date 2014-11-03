@@ -2,15 +2,13 @@ from collections import deque
 import random
 
 class Device:
-    #[static fields]
-    q_array_size = 20
-    requests_count = 14
 
     def __init__(self, first_value, second_value):
         self.first_value = first_value
         self.second_value = second_value
         self.request_queue = deque()
-        self.waiting_time_array = [i for i in range(0, Device.requests_count)]
+        self.next_request_number = 0
+        self.present_request = None
 
     # [properties]
     def get_first_value(self):
@@ -45,14 +43,6 @@ class Device:
     present_request = property(get_present_request, set_present_request,
             None, None)
 
-    def get_waiting_time_array(self):
-        return self.__waiting_time_array
-    def set_waiting_time_array(self, waiting_time_array):
-        self.__waiting_time_array = waiting_time_array
-    waiting_time_array = property(get_waiting_time_array, 
-            set_waiting_time_array, None, None)
-
-        
     #[logic]
     def get_processing_time(self):
         r = random.random()
@@ -66,6 +56,3 @@ class Device:
 
     def is_empty_request_queue(self):
         return len(self.request_queue) == 0
-
-    def add_waiting_time(self, index, waiting_time):
-        self.waiting_time_array[index] = waiting_time

@@ -1,5 +1,6 @@
 import unittest
 from app.logic.model import Model
+from app.logic.request import Request
 
 class TestModel(unittest.TestCase):
 
@@ -21,3 +22,26 @@ class TestModel(unittest.TestCase):
 
     def test_initialize_model_with_not_zero_exp_intervale(self):
         self.assertGreater(Model.get_exp_interval(), 0)
+
+    def test_handle_incoming_event(self):
+        #[ARRANG]
+        self.time = 10.5
+        #[ACT]
+        Model.handle_incoming_event(self.time)
+        #[ASSERT]
+        self.assertGreater(Model.event_list.qsize(), 0)
+
+    def test_handle_process_device(self):
+        #[ARRANGE]
+        time = 11.5
+        request_number = 5
+        request = Request(request_number, time)
+
+        old_next_request_number = Model.device.next_request_number
+        #[ACT]
+        Model.process_device(request)
+        #[ASSERT]
+        self.assertIsNotNone(Model.device.present_request)
+        self.assertGreater(Model.device.next_request_number,
+                old_next_request_number)
+
