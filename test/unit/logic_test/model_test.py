@@ -16,3 +16,8 @@ class TestModel(unittest.TestCase):
     def test_initialize_model_with_event_adding(self):
         self.assertEqual(1, Model.event_list.qsize())
 
+    def test_initialize_model_with_device_adding(self):
+        self.assertIsNotNone(Model.device)
+
+    def test_initialize_model_with_not_zero_exp_intervale(self):
+        self.assertGreater(Model.get_exp_interval(), 0)
