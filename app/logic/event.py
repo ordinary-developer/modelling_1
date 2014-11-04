@@ -11,6 +11,19 @@ class Event(metaclass=ABCMeta):
         self.__time = time_value
     time = property(get_time, set_time, None, None)
 
+
+    def __lt__(self, other):
+        try:
+            return self.time < other.time
+        except AttributeError:
+            return NotImplemented
+
+    def __gt__(self, other):
+        try:
+            return self.time > other.time
+        except AtttributeError:
+            return NotImplemented
+
     @abstractmethod
     def handle_self(self, Model):
         pass

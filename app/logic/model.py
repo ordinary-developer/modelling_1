@@ -5,7 +5,6 @@ from app.logic.incoming_event import IncomingEvent
 from app.logic.outcoming_event import OutcomingEvent
 from app.logic.device import Device
 from app.logic.request import Request
-from app.logic.event_container import EventContainer
 
 class Model:
     #static fields
@@ -26,18 +25,17 @@ class Model:
     @staticmethod
     def start():
         while Model.model_time < Model.work_time:
-            (time, present_event) = Model.get_event()
+            present_event = Model.get_event()
             Model.model_time = present_event.time
             present_event.handle_self(Model)
 
     @staticmethod
     def add_event(event):
-        Model.event_list.put((event.time, EventContainer(event)))
+        Model.event_list.put(event)
 
     @staticmethod
     def get_event():
-        (time, event_container) = Model.event_list.get()
-        return (time, event_container.event)
+        return Model.event_list.get()
     
     @staticmethod
     def get_exp_interval():
