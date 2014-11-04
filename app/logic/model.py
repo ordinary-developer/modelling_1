@@ -6,8 +6,9 @@ from app.logic.outcoming_event import OutcomingEvent
 from app.logic.device import Device
 from app.logic.request import Request
 
+
 class Model:
-    #static fields
+
     work_time = None
     interval_time = None
     event_list = None
@@ -51,7 +52,7 @@ class Model:
             Model.device.add_request(request)
         else:
             Model.process_device(request)
-
+        #log function
         print('[handle an incoming event]\t\t{0} sec.'.format(event_time))
 
     @staticmethod
@@ -62,7 +63,7 @@ class Model:
             Model.process_device(request)
         else:
             Model.device.present_request = None
-
+        #log function
         print('[handling an outcoming event]\t\t{0} sec.'.format(time))
 
     @staticmethod
@@ -72,5 +73,5 @@ class Model:
         time = Model.device.get_processing_time()
         total_time = Model.model_time - request.time
         Model.add_event(OutcomingEvent(Model.model_time + total_time))
-
+        #log function
         print('[processing the device]\t\t\trequest #{0}'.format(request.number))

@@ -1,5 +1,4 @@
 from app.logic.event import Event
-#from app.logic.model import Model
 
 
 class IncomingEvent(Event):
