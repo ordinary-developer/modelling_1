@@ -45,18 +45,19 @@ class Model:
 
     @staticmethod
     def handle_incoming_event(time):
-        print('Handle incoming event')
-        Model.add_event(IncomingEvent(time + Model.get_exp_interval()))
+        event_time = time + Model.get_exp_interval()
+        Model.add_event(IncomingEvent(event_time))
         current_request_number = Model.device.next_request_number
-        request = Request(time, current_request_number)
+        request = Request(current_request_number, time)
         if Model.device.present_request != None:
             Model.device.add_request(request)
         else:
             Model.process_device(request)
 
+        print('[handle an incoming event]\t\t{0} sec.'.format(event_time))
+
     @staticmethod
     def handle_outcoming_event(time):
-        print('Handle outcoming event')
         Model.device.present_request = None
         if not Model.device.is_empty_request_queue():
             request = Model.device.remove_request()
@@ -64,17 +65,14 @@ class Model:
         else:
             Model.device.present_request = None
 
+        print('[handling an outcoming event]\t\t{0} sec.'.format(time))
+
     @staticmethod
     def process_device(request):
-        print('process device')
         Model.device.present_request = request
-        #[old code]
-        #c = Model.device.next_request_number
-        #Model.device.next_request_number = c
-
-        #[new code]
         Model.device.next_request_number += 1
-
         time = Model.device.get_processing_time()
         total_time = Model.model_time - request.time
         Model.add_event(OutcomingEvent(Model.model_time + total_time))
+
+        print('[processing the device]\t\t\trequest #{0}'.format(request.number))
